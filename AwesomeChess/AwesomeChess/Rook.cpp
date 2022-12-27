@@ -4,7 +4,7 @@ bool Rook::checkMove(string place) {
 	int tempPlaceY = this->getPositionNumber_Y();
 	int destx = Piece::getPositionNumber_X(place);
 	int desty = Piece::getPositionNumber_Y(place);
-	if ( destx == tempPlaceX) //if the path is the same row
+	if ( destx == tempPlaceX) //if the path is the same col
 	{
 		for (tempPlaceY; tempPlaceY < desty; desty > tempPlaceY ? tempPlaceY++ : tempPlaceY--) //check there is something that is blocking, up or down depends on the dst
 		{
@@ -16,7 +16,7 @@ bool Rook::checkMove(string place) {
 	}
 	if (desty == tempPlaceY) //if the path is the same row
 	{
-		for (tempPlaceX; tempPlaceX < destx; destx > tempPlaceX ? tempPlaceX++ : tempPlaceX--) //check there is something that is blocking, up or down depends on the dst
+		for (tempPlaceX; tempPlaceX < destx; destx > tempPlaceX ? tempPlaceX++ : tempPlaceX--) //check there is something that is blocking, left or right depends on the dst
 		{
 			if (!_b->isEmpty(tempPlaceX, tempPlaceY)) {
 				return(false);
