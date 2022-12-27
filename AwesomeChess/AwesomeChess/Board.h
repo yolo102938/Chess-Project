@@ -11,9 +11,9 @@ class Piece;
 class Board
 {
 private:
-	string BoardString;
-	int turnColor;
-	Piece* pieces[BOARD_SIZE][BOARD_SIZE];
+	string _BoardString;
+	int _turnColor;
+	Piece* _pieces[BOARD_SIZE][BOARD_SIZE];
 
 public:
 	Board(string boardSetup);
