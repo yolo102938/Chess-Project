@@ -1,5 +1,6 @@
 #include "Rook.h"
-bool Rook::checkMove(string place) {
+bool Rook::checkMove(string place)
+{
 	int tempPlaceX = this->getPositionNumber_X();
 	int tempPlaceY = this->getPositionNumber_Y();
 	int destx = Piece::getPositionNumber_X(place);
