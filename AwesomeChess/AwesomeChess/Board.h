@@ -18,5 +18,5 @@ private:
 public:
 	Board(string boardSetup);
 	~Board();
-
+	bool isEmpty(int x, int y);
 };

@@ -18,4 +18,6 @@ public:
 	int getPositionNumber_X() const;
 	int getPositionNumber_Y() const;
 	virtual bool checkMove(string place) = 0;
+	static int getPositionNumber_X(string position);
+	static int getPositionNumber_Y(string position);
 };

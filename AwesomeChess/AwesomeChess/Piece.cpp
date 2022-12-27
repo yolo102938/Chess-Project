@@ -20,10 +20,18 @@ string Piece::getPositionString() const
 {
 	return this->_position;
 }
+int Piece::getPositionNumber_Y(string position)
+{
+	return int(position[3]);
+}
 
+int Piece::getPositionNumber_X(string position)
+{
+	return int(position[2]) - 96;
+}
 int Piece::getPositionNumber_Y() const
 {
-	return int(_position[3]);
+	return int(_position[3])-48;
 }
 
 int Piece::getPositionNumber_X() const
