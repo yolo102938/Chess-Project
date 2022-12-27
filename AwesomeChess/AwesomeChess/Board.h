@@ -1,7 +1,8 @@
 #pragma once
+#include <string> 
 #include <iostream>
 #include "Piece.h"
-
+#include "inc.h"
 using std::string;
 
 class Piece;
@@ -19,4 +20,8 @@ public:
 	Board(string boardSetup);
 	~Board();
 	bool isEmpty(int x, int y);
+	bool checkCheck(int color);//funny name lolz
+	bool checkMate(int color);//even funnier
+	int checkMove(string begDest);
+	
 };
