@@ -27,6 +27,8 @@ bool Queen::checkMove(string place)
 		}
 		return(true);
 	}
+	int tempPlaceX = this->getPositionNumber_X();
+	int tempPlaceY = this->getPositionNumber_Y();
 	//if not up and down, check diagonal. if not, return false
 	int move = 0;
 	if (abs((desty - tempPlaceY) / (destx - tempPlaceX)) == 1)
@@ -45,6 +47,7 @@ bool Queen::checkMove(string place)
 			tempPlaceX = +move;
 			tempPlaceY = +move;
 		}
+		return true;
 	}
 	return(false);
 	
