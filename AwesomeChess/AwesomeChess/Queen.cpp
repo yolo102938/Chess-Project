@@ -1,4 +1,9 @@
 #include "Queen.h"
+
+Queen::Queen(Board* board, string pos, string type, int color) : Piece(board, pos, type, color) {}
+
+Queen::~Queen() {}
+
 bool Queen::checkMove(string place) 
 {
 	int tempPlaceX = this->getPositionNumber_X();

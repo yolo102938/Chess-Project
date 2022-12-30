@@ -1,9 +1,10 @@
 #include "Piece.h"
 
-Piece::Piece(Board* board, string pos, int color)
+Piece::Piece(Board* board, string pos, string type, int color)
 {
 	_position = pos;
 	_color = color;
+	_type = type;
 	_b = board;
 }
 
@@ -22,7 +23,7 @@ string Piece::getPositionString() const
 }
 string Piece::getType() const
 {
-	return this->type;
+	return this->_type;
 }
 void Piece::setPosition(string pos) {
 	this->_position = pos;

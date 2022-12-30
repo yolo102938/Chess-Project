@@ -5,7 +5,8 @@
 
 class Knight : public Piece
 {
-	Knight(string pos, int color);
+public:
+	Knight(Board* board, string pos, string type, int color) : Piece(board, pos, type, color) {};
 	virtual ~Knight();
 	virtual bool checkMove(string place);
 };

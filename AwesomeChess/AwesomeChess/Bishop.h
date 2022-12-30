@@ -5,7 +5,7 @@
 
 class Bishop : public Piece
 {
-	Bishop(string pos, int color);
+	Bishop(Board* board, string pos, string type, int color);
 	virtual ~Bishop();
 	virtual bool checkMove(string place);
 };

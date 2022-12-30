@@ -5,7 +5,8 @@
 
 class Pawn : public Piece
 {
-	Pawn(string pos, int color);
+public:
+	Pawn(Board* board, string pos, string type, int color);
 	virtual ~Pawn();
 	virtual bool checkMove(string place);
 };

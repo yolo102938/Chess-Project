@@ -5,7 +5,8 @@
 
 class Rook : public Piece
 {
-	Rook(string pos, int color);
+public:
+	Rook(Board* board, string pos, string type, int color);
 	virtual ~Rook();
 	virtual bool checkMove(string place);
 };

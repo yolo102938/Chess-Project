@@ -7,12 +7,12 @@ class Piece
 {
 protected:
 	int _color;
-	string type;
+	string _type;
 	string _position;
 	Board* _b;
 
 public:
-	Piece(Board* board, string pos, int color);
+	Piece(Board* board, string pos, string type, int color);
 	~Piece();
 	void setPosition(string pos);
 	int getColor() const;
