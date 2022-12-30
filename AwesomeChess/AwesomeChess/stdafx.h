@@ -11,6 +11,10 @@
 
 #include <stdio.h>
 #include <tchar.h>
+#include "Board.h"
+#include <string>
 
+class Board;
+class Piece;
 
 // TODO: reference additional headers your program requires here

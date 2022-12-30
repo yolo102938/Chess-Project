@@ -2,16 +2,16 @@
 #include <string> 
 #include <iostream>
 #include "Piece.h"
-#include "inc.h"
+
 using std::string;
 
 class Piece;
 
 #define BOARD_SIZE 8
-#include "inc.h"
+
 class Board
 {
-private:
+protected:
 	string _BoardString;
 	int _turnColor;
 	Piece* _pieces[BOARD_SIZE][BOARD_SIZE];
@@ -19,6 +19,9 @@ private:
 public:
 	Board(string boardSetup);
 	~Board();
+	string getBoardStr() const;
+	int getTurn() const;
+	void moveToNextTurn();
 	bool isEmpty(int x, int y);
 	bool checkCheck(int color);//funny name lolz
 	bool checkMate(int color);//even funnier

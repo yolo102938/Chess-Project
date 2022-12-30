@@ -3,6 +3,10 @@
 #include "Board.h"
 #include "Piece.h"
 
+class Piece;
+
+using std::string;
+
 class Rook : public Piece
 {
 public:

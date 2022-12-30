@@ -1,11 +1,5 @@
 #include "Board.h"
-#include "Rook.h"
-#include "King.h"
-#include "Pawn.h"
-#include "Knight.h"
-#include "Queen.h"
-#include "Bishop.h"
-#include "Piece.h"
+#include "inc.h"
 
 Board::Board(string boardSetup)
 {
@@ -47,27 +41,31 @@ Board::Board(string boardSetup)
 			}
 			else if (boardSetup[stringPlace] == 'n')
 			{
-				_pieces[i][j] = new Knight(this, std::to_string(i) + std::to_string(j + 65), 1);
+				_pieces[i][j] = new Knight(this, std::to_string(i) + std::to_string(j + 65), "knight", 1);
 			}
 			else if (boardSetup[stringPlace] == 'N')
 			{
-				_pieces[i][j] = new Knight(this, std::to_string(i) + std::to_string(j + 65), 0);
+				_pieces[i][j] = new Knight(this, std::to_string(i) + std::to_string(j + 65), "knight", 0);
 			}
 			else if (boardSetup[stringPlace] == 'q')
 			{
-				_pieces[i][j] = new Queen(this, std::to_string(i) + std::to_string(j + 65), 1);
+				_pieces[i][j] = new Queen(this, std::to_string(i) + std::to_string(j + 65), "queen", 1);
 			}
 			else if (boardSetup[stringPlace] == 'Q')
 			{
-				_pieces[i][j] = new Queen(this, std::to_string(i) + std::to_string(j + 65), 0);
+				_pieces[i][j] = new Queen(this, std::to_string(i) + std::to_string(j + 65), "queen", 0);
 			}
 			else if (boardSetup[stringPlace] == 'p')
 			{
-				_pieces[i][j] = new Pawn(this, std::to_string(i) + std::to_string(j + 65),1);
+				_pieces[i][j] = new Pawn(this, std::to_string(i) + std::to_string(j + 65), "pawn", 1);
 			}
 			else if (boardSetup[stringPlace] == 'P')
 			{
-				_pieces[i][j] = new Pawn(this, std::to_string(i) + std::to_string(j + 65), 0);
+				_pieces[i][j] = new Pawn(this, std::to_string(i) + std::to_string(j + 65), "pawn", 0);
+			}
+			else if (boardSetup[stringPlace] == '#')
+			{
+				_pieces[i][j] = nullptr;
 			}
 			else
 			{
@@ -76,6 +74,40 @@ Board::Board(string boardSetup)
 		}
 	}
 }
+
+Board::~Board()
+{
+	for (int i = 0; i < BOARD_SIZE; i++)
+	{
+		for (int j = 0; j < BOARD_SIZE; j++)
+		{
+			delete _pieces[i][j];
+		}
+	}
+}
+
+string Board::getBoardStr() const
+{
+	return this->_BoardString;
+}
+
+int Board::getTurn() const
+{
+	return this->_turnColor;
+}
+
+void Board::moveToNextTurn()
+{
+	if (this->_turnColor == 0)
+	{
+		this->_turnColor = 1;
+	}
+	if (this->_turnColor == 1)
+	{
+		this->_turnColor = 0;
+	}
+}
+
 int Board::checkMove(string begDest) 
 {
 	//parsing the string
@@ -93,10 +125,11 @@ int Board::checkMove(string begDest)
 	int destx = Piece::getPositionNumber_X(deststr);
 	int desty = Piece::getPositionNumber_Y(deststr);
 
-	Piece* current = _pieces[currY][currX];
-	Piece* dest = _pieces[desty][destx];
+	Piece* current = _pieces[currX][currY];
+	Piece* dest = _pieces[destx][desty];
 	//check if dest has same color as turn color
-	if (dest != nullptr) {
+	if (dest != nullptr)
+	{
 		if (dest->getColor() == _turnColor) {
 			return(3);
 		}
@@ -190,4 +223,9 @@ string Board::findKing(int color) {
 			}
 		}
 	}
+}
+bool Board::isEmpty(int x, int y)
+{
+	////////////TEMP!!
+	return true;
 }

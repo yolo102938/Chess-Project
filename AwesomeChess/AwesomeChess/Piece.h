@@ -1,7 +1,10 @@
 #pragma once
+#include <string>
 #include "Board.h"
 
 class Board;
+
+using std::string;
 
 class Piece
 {

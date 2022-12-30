@@ -5,6 +5,8 @@ in order to read and write information from and to the Backend
 */
 
 #include "Pipe.h"
+#include "Board.h"
+#include <string>
 #include <iostream>
 #include <thread>
 
@@ -19,6 +21,7 @@ void main()
 
 	
 	Pipe p;
+	Board* b = new Board("rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1");
 	bool isConnect = p.connect();
 	
 	string ans;
@@ -46,7 +49,7 @@ void main()
 	// msgToGraphics should contain the board string accord the protocol
 	// YOUR CODE
 
-	strcpy_s(msgToGraphics, "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1"); // just example...
+	strcpy_s(msgToGraphics, (b->getBoardStr()).c_str()); // just example...
 	
 	p.sendMessageToGraphics(msgToGraphics);   // send the board string
 
@@ -57,19 +60,17 @@ void main()
 	{
 		// should handle the string the sent from graphics
 		// according the protocol. Ex: e2e4           (move e2 to e4)
-		
+		string res = std::to_string(b->checkMove(msgFromGraphics));
 		// YOUR CODE
-		strcpy_s(msgToGraphics, "YOUR CODE"); // msgToGraphics should contain the result of the operation
-
-		/******* JUST FOR EREZ DEBUGGING ******/
-		int r = rand() % 10; // just for debugging......
-		msgToGraphics[0] = (char)(1 + '0');
-		msgToGraphics[1] = 0;
-		/******* JUST FOR EREZ DEBUGGING ******/
-
+		strcpy_s(msgToGraphics, res.c_str()); // msgToGraphics should contain the result of the operation
 
 		// return result to graphics		
-		p.sendMessageToGraphics(msgToGraphics);   
+		p.sendMessageToGraphics(msgToGraphics);  
+
+		if (res == "1" || res == "0")
+		{
+			b->moveToNextTurn();
+		}
 
 		// get message from graphics
 		msgFromGraphics = p.getMessageFromGraphics();

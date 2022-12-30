@@ -3,6 +3,11 @@
 #include "Board.h"
 #include "Piece.h"
 
+using std::string;
+
+class Board;
+class Piece;
+
 class Queen : public Piece
 {
 public:
