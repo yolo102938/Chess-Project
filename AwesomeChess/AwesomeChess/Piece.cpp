@@ -20,6 +20,13 @@ string Piece::getPositionString() const
 {
 	return this->_position;
 }
+string Piece::getType() const
+{
+	return this->type;
+}
+void Piece::setPosition(string pos) {
+	this->_position = pos;
+}
 int Piece::getPositionNumber_Y(string position)
 {
 	return int(position[1])-48;

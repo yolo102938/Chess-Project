@@ -7,9 +7,9 @@ Board::Board(string boardSetup)
 	this->_turnColor = 0; //setting the number for the current color's turn (1 - black  |  0 - white)
 
 	//looping to create all of the piece objects according to the given string, and forming the _pieces array.
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < BOARD_SIZE; i++)
 	{
-		for (int j = 0; j < 8; j++)
+		for (int j = 0; j < BOARD_SIZE; j++)
 		{
 			////Maybe replaceing this later with switch case
 			////Creator functions for the pieces are comments until we create them
@@ -88,22 +88,99 @@ int Board::checkMove(string begDest)
 
 	Piece* current = _pieces[currY][currX];
 	Piece* dest = _pieces[desty][destx];
-	//code 2 checker
-	if (dest == nullptr) {
-		return(2);
-	}
-	if (current->getColor() != _turnColor) {
-		return(2);
-	}
-	//code 3 checker
+	//check if dest has same color as turn color
 	if (dest != nullptr) {
 		if (dest->getColor() == _turnColor) {
 			return(3);
 		}
 	}
+	//check if play piece is same color as turn color
+	if (current->getColor() != _turnColor) {
+		return(2);
+	}
 	//code 6 checker
 	if (!current->checkMove(deststr)) {
 		return(6);
 	}
+	//after all the normal checkers, move the piece and check for check/mate on both sides"
+	//if there is one, the wrongfully deleted piece is saved in the dest pointer luckily so no need for temps
+	
+	_pieces[currY][currX] = nullptr;
+	_pieces[desty][destx] = current;
+	current->setPosition(deststr);
+	if (checkCheck(abs(_turnColor))) //if the moves checks the current player (illegal move),undo the move and return error code 4
+	{
+		current->setPosition(begstr);
+		_pieces[currY][currX] = current;
+		_pieces[desty][destx] = dest;
+		return(4);
+	}
+
+	_turnColor = abs(_turnColor - 1);//change turn color
+	
+	if (checkCheck(_turnColor)) //if the moves checks the other player,check for mate and return the right code.
+	{
+		
+		if (checkMate(_turnColor)) 
+		{
+			return(8);
+		}
+		return(1);
+	}
+	_turnColor = abs(_turnColor - 1);
 	return(0);//if nothing came up,return valid :D
+}
+bool Board::checkMate(int color) {
+	string king = findKing(color);
+	int kingX = Piece::getPositionNumber_X(king);
+	int kingY = Piece::getPositionNumber_X(king);
+	Piece* temp = nullptr;
+	Piece* kingPiece = _pieces[kingX][kingY];
+	bool ret = true;
+	for (int y = -1; y < 2; y++) {
+		for (int x = -1; x < 2; x++) {
+			 if (_pieces[y][x]->getColor() == color) {}
+			 else 
+			 {
+				 temp = _pieces[y][x];
+				 _pieces[kingX][kingY] = nullptr;
+				 _pieces[y][x] = kingPiece;
+				 ret = checkCheck(color);
+				  _pieces[y][x] = temp ;
+				 _pieces[kingX][kingY] = kingPiece;
+			 }
+		}
+	}
+	return(ret);
+}
+bool Board::checkCheck(int color) 
+{
+	string king = findKing(color);
+	for (int i = 0; i < BOARD_SIZE; i++)
+	{
+		for (int j = 0; j < BOARD_SIZE; j++)
+		{
+			if (_pieces[i][j] != nullptr) 
+			{
+				if (_pieces[i][j]->getColor() == abs(color-1) && _pieces[i][j]->checkMove(king) )
+				{
+					return(true);
+				}
+			}
+		}
+	}
+	return(false);
+}
+string Board::findKing(int color) {
+	for (int i = 0; i < BOARD_SIZE; i++)
+	{
+		for (int j = 0; j < BOARD_SIZE; j++) 
+		{
+			if(_pieces[i][j]!=nullptr){
+				if (_pieces[i][j]->getColor() == color && _pieces[i][j]->getType()=="king") {
+					return(_pieces[i][j]->getPositionString());
+			}
+			}
+		}
+	}
 }
