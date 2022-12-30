@@ -1,4 +1,11 @@
 #include "Board.h"
+#include "Rook.h"
+#include "King.h"
+#include "Pawn.h"
+#include "Knight.h"
+#include "Queen.h"
+#include "Bishop.h"
+#include "Piece.h"
 
 Board::Board(string boardSetup)
 {
@@ -16,51 +23,51 @@ Board::Board(string boardSetup)
 
 			if (boardSetup[stringPlace] == 'r')
 			{
-				_pieces[i][j] = Rook(this, std::to_string(i) + std::to_string(j + 65), 1);
+				_pieces[i][j] = new Rook(this, std::to_string(i) + std::to_string(j + 65), "rook", 1);
 			}
 			else if (boardSetup[stringPlace] == 'R')
 			{
-				_pieces[i][j] = Rook(this, std::to_string(i) + std::to_string(j + 65), 0);
+				_pieces[i][j] = new Rook(this, std::to_string(i) + std::to_string(j + 65), "rook", 0);
 			}
 			else if (boardSetup[stringPlace] == 'k')
 			{
-				_pieces[i][j] = King(this, std::to_string(i) + std::to_string(j + 65), 1);
+				_pieces[i][j] = new King(this, std::to_string(i) + std::to_string(j + 65), "king", 1);
 			}
 			else if (boardSetup[stringPlace] == 'K')
 			{
-				_pieces[i][j] = King(this, std::to_string(i) + std::to_string(j + 65), 0);
+				_pieces[i][j] = new King(this, std::to_string(i) + std::to_string(j + 65), "king", 0);
 			}
 			else if (boardSetup[stringPlace] == 'b')
 			{
-				_pieces[i][j] = Bishop(this, std::to_string(i) + std::to_string(j + 65), 1);
+				_pieces[i][j] = new Bishop(this, std::to_string(i) + std::to_string(j + 65), "bishop", 1);
 			}
 			else if (boardSetup[stringPlace] == 'B')
 			{
-				_pieces[i][j] = Bishop(this, std::to_string(i) + std::to_string(j + 65), 0);
+				_pieces[i][j] = new Bishop(this, std::to_string(i) + std::to_string(j + 65), "bishop", 0);
 			}
 			else if (boardSetup[stringPlace] == 'n')
 			{
-				_pieces[i][j] = Knight(this, std::to_string(i) + std::to_string(j + 65), 1);
+				_pieces[i][j] = new Knight(this, std::to_string(i) + std::to_string(j + 65), 1);
 			}
 			else if (boardSetup[stringPlace] == 'N')
 			{
-				_pieces[i][j] = Knight(this, std::to_string(i) + std::to_string(j + 65), 0);
+				_pieces[i][j] = new Knight(this, std::to_string(i) + std::to_string(j + 65), 0);
 			}
 			else if (boardSetup[stringPlace] == 'q')
 			{
-				_pieces[i][j] = Queen(this, std::to_string(i) + std::to_string(j + 65), 1);
+				_pieces[i][j] = new Queen(this, std::to_string(i) + std::to_string(j + 65), 1);
 			}
 			else if (boardSetup[stringPlace] == 'Q')
 			{
-				_pieces[i][j] = Queen(this, std::to_string(i) + std::to_string(j + 65), 0);
+				_pieces[i][j] = new Queen(this, std::to_string(i) + std::to_string(j + 65), 0);
 			}
 			else if (boardSetup[stringPlace] == 'p')
 			{
-				_pieces[i][j] = Pawn(this, std::to_string(i) + std::to_string(j + 65),1);
+				_pieces[i][j] = new Pawn(this, std::to_string(i) + std::to_string(j + 65),1);
 			}
 			else if (boardSetup[stringPlace] == 'P')
 			{
-				_pieces[i][j] = Pawn(this, std::to_string(i) + std::to_string(j + 65), 0);
+				_pieces[i][j] = new Pawn(this, std::to_string(i) + std::to_string(j + 65), 0);
 			}
 			else
 			{

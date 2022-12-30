@@ -5,7 +5,8 @@
 
 class Queen : public Piece
 {
-	Queen(string pos, int color);
+public:
+	Queen(Board* board, string pos, string type, int color);
 	virtual ~Queen();
 	virtual bool checkMove(string place);
 };
