@@ -5,7 +5,7 @@ Board::Board(string boardSetup)
 {
 	int stringPlace = 0;
 	this->_BoardString = boardSetup; //setting the board's string to the given string
-	this->_turnColor = 0; //setting the number for the current color's turn (1 - black  |  0 - white)
+	this->_turnColor = 1; //setting the number for the current color's turn (1 - black  |  0 - white)
 
 	//looping to create all of the piece objects according to the given string, and forming the _pieces array.
 	for (int i = 0; i < BOARD_SIZE; i++)
@@ -17,51 +17,51 @@ Board::Board(string boardSetup)
 
 			if (boardSetup[stringPlace] == 'r')
 			{
-				_pieces[i][j] = new Rook(this, std::to_string(i) + std::to_string(j + 65), "rook", 1);
+				_pieces[i][j] = new Rook(this, char(j + 97) + std::to_string(i+1), "rook", 0);
 			}
 			else if (boardSetup[stringPlace] == 'R')
 			{
-				_pieces[i][j] = new Rook(this, std::to_string(i) + std::to_string(j + 65), "rook", 0);
+				_pieces[i][j] = new Rook(this,  char(j + 97)+ std::to_string(i+1), "rook", 1);
 			}
 			else if (boardSetup[stringPlace] == 'k')
 			{
-				_pieces[i][j] = new King(this, std::to_string(i) + std::to_string(j + 65), "king", 1);
+				_pieces[i][j] = new King(this, char(j + 97) + std::to_string(i+1), "king", 0);
 			}
 			else if (boardSetup[stringPlace] == 'K')
 			{
-				_pieces[i][j] = new King(this, std::to_string(i) + std::to_string(j + 65), "king", 0);
+				_pieces[i][j] = new King(this, char(j + 97) + std::to_string(i+1), "king", 1);
 			}
 			else if (boardSetup[stringPlace] == 'b')
 			{
-				_pieces[i][j] = new Bishop(this, std::to_string(i) + std::to_string(j + 65), "bishop", 1);
+				_pieces[i][j] = new Bishop(this, char(j + 97) + std::to_string(i+1), "bishop", 0);
 			}
 			else if (boardSetup[stringPlace] == 'B')
 			{
-				_pieces[i][j] = new Bishop(this, std::to_string(i) + std::to_string(j + 65), "bishop", 0);
+				_pieces[i][j] = new Bishop(this, char(j + 97) + std::to_string(i+1), "bishop", 1);
 			}
 			else if (boardSetup[stringPlace] == 'n')
 			{
-				_pieces[i][j] = new Knight(this, std::to_string(i) + std::to_string(j + 65), "knight", 1);
+				_pieces[i][j] = new Knight(this, char(j + 97) + std::to_string(i+1), "knight", 0);
 			}
 			else if (boardSetup[stringPlace] == 'N')
 			{
-				_pieces[i][j] = new Knight(this, std::to_string(i) + std::to_string(j + 65), "knight", 0);
+				_pieces[i][j] = new Knight(this, char(j + 97) + std::to_string(i+1), "knight", 1);
 			}
 			else if (boardSetup[stringPlace] == 'q')
 			{
-				_pieces[i][j] = new Queen(this, std::to_string(i) + std::to_string(j + 65), "queen", 1);
+				_pieces[i][j] = new Queen(this, char(j + 97) + std::to_string(i+1), "queen", 0);
 			}
 			else if (boardSetup[stringPlace] == 'Q')
 			{
-				_pieces[i][j] = new Queen(this, std::to_string(i) + std::to_string(j + 65), "queen", 0);
+				_pieces[i][j] = new Queen(this, char(j + 97) + std::to_string(i+1), "queen", 1);
 			}
 			else if (boardSetup[stringPlace] == 'p')
 			{
-				_pieces[i][j] = new Pawn(this, std::to_string(i) + std::to_string(j + 65), "pawn", 1);
+				_pieces[i][j] = new Pawn(this, char(j + 97) + std::to_string(i+1), "pawn", 0);
 			}
 			else if (boardSetup[stringPlace] == 'P')
 			{
-				_pieces[i][j] = new Pawn(this, std::to_string(i) + std::to_string(j + 65), "pawn", 0);
+				_pieces[i][j] = new Pawn(this, char(j + 97) + std::to_string(i+1), "pawn", 1);
 			}
 			else if (boardSetup[stringPlace] == '#')
 			{
@@ -71,6 +71,7 @@ Board::Board(string boardSetup)
 			{
 				_pieces[i][j] = nullptr;
 			}
+			stringPlace++;
 		}
 	}
 }
@@ -102,7 +103,7 @@ void Board::moveToNextTurn()
 	{
 		this->_turnColor = 1;
 	}
-	if (this->_turnColor == 1)
+	else if (this->_turnColor == 1)
 	{
 		this->_turnColor = 0;
 	}
@@ -115,24 +116,28 @@ int Board::checkMove(string begDest)
 	begstr[0] = begDest[0];
 	begstr[1] = begDest[1];
 
-	int currX = Piece::getPositionNumber_X(begstr);
-	int currY = Piece::getPositionNumber_X(begstr);
+	int currX = Piece::getPositionNumber_X(begstr)-1;
+	int currY = Piece::getPositionNumber_Y(begstr)-1;
 	
 	string deststr = "te";//just temp cus idk how it works in cpp
 	deststr[0] = begDest[2];
 	deststr[1] = begDest[3];
 
-	int destx = Piece::getPositionNumber_X(deststr);
-	int desty = Piece::getPositionNumber_Y(deststr);
+	int destx = Piece::getPositionNumber_X(deststr)-1;
+	int desty = Piece::getPositionNumber_Y(deststr)-1;
 
-	Piece* current = _pieces[currX][currY];
-	Piece* dest = _pieces[destx][desty];
+	Piece* current = _pieces[currY][currX];
+	Piece* dest = _pieces[desty][destx];
 	//check if dest has same color as turn color
 	if (dest != nullptr)
 	{
 		if (dest->getColor() == _turnColor) {
 			return(3);
 		}
+	}
+	if (current == nullptr)
+	{
+		return(7);
 	}
 	//check if play piece is same color as turn color
 	if (current->getColor() != _turnColor) {
@@ -148,7 +153,7 @@ int Board::checkMove(string begDest)
 	_pieces[currY][currX] = nullptr;
 	_pieces[desty][destx] = current;
 	current->setPosition(deststr);
-	if (checkCheck(abs(_turnColor))) //if the moves checks the current player (illegal move),undo the move and return error code 4
+	if (checkCheck(_turnColor)) //if the moves checks the current player (illegal move),undo the move and return error code 4
 	{
 		current->setPosition(begstr);
 		_pieces[currY][currX] = current;
@@ -156,7 +161,7 @@ int Board::checkMove(string begDest)
 		return(4);
 	}
 
-	_turnColor = abs(_turnColor - 1);//change turn color
+	
 	
 	if (checkCheck(_turnColor)) //if the moves checks the other player,check for mate and return the right code.
 	{
@@ -167,7 +172,6 @@ int Board::checkMove(string begDest)
 		}
 		return(1);
 	}
-	_turnColor = abs(_turnColor - 1);
 	return(0);//if nothing came up,return valid :D
 }
 bool Board::checkMate(int color) {
@@ -193,6 +197,7 @@ bool Board::checkMate(int color) {
 	}
 	return(ret);
 }
+
 bool Board::checkCheck(int color) 
 {
 	string king = findKing(color);
@@ -224,8 +229,6 @@ string Board::findKing(int color) {
 		}
 	}
 }
-bool Board::isEmpty(int x, int y)
-{
-	////////////TEMP!!
-	return true;
+bool Board::isEmpty(int x, int y) {
+	return(_pieces[y-1][x-1] == nullptr);
 }

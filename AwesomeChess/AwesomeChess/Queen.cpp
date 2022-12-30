@@ -10,7 +10,8 @@ bool Queen::checkMove(string place)
 	int tempPlaceY = this->getPositionNumber_Y();
 	int destx = Piece::getPositionNumber_X(place);
 	int desty = Piece::getPositionNumber_Y(place);
-
+	int movey = 0;
+	int movex = 0;
 	//up and down chckers
 	if (destx == tempPlaceX) //if the path is the same col
 	{
@@ -32,27 +33,39 @@ bool Queen::checkMove(string place)
 		}
 		return(true);
 	}
-
-	tempPlaceX = this->getPositionNumber_X();
-	tempPlaceY = this->getPositionNumber_Y();
 	//if not up and down, check diagonal. if not, return false
 	int move = 0;
-	if (abs((desty - tempPlaceY) / (destx - tempPlaceX)) == 1)
+	if (abs((desty - tempPlaceY) / abs(destx - tempPlaceX)) == 1)
 	{
-		if (desty - tempPlaceY > 0) {
-			move = -1;
-		}
-		else {
-			move = 1;
-		}
-		while (destx != tempPlaceX)//no need to check both cus it has the same number of moves
+		if (abs((desty - tempPlaceY) / abs(destx - tempPlaceX)) != 1) //if its not diagonal return false
 		{
-			if (!_b->isEmpty(tempPlaceX, tempPlaceY)) {
+			return(false);
+		}
+		if (desty - tempPlaceY > 0)
+		{
+			movey = 1;
+		}
+		else
+		{
+			movey = -1;
+		}
+		if (destx - tempPlaceX > 0)
+		{
+			movex = 1;
+		}
+		else
+		{
+			movex = -1;
+		}
+		do
+		{
+			tempPlaceX += movex;
+			tempPlaceY += movey;
+			if (!_b->isEmpty(tempPlaceX, tempPlaceY))
+			{
 				return(false);
 			}
-			tempPlaceX = +move;
-			tempPlaceY = +move;
-		}
+		} while (abs(destx - tempPlaceX) > 1);//no need to check both cus it has the same number of moves
 		return true;
 	}
 	return(false);

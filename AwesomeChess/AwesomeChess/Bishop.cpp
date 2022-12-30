@@ -10,28 +10,36 @@ bool Bishop::checkMove(string place)
 	int tempPlaceY = this->getPositionNumber_Y();
 	int destx = Piece::getPositionNumber_X(place);
 	int desty = Piece::getPositionNumber_Y(place);
-	int move = 0;
-
-	if (abs((desty - tempPlaceY) / (destx - tempPlaceX)) != 1) //if its not diagonal return false
+	int movey = 0;
+	int movex = 0;
+	if (abs((desty - tempPlaceY) / abs(destx - tempPlaceX)) != 1) //if its not diagonal return false
 	{
 		return(false);
 	}
 	if (desty - tempPlaceY > 0)
 	{
-		move = -1;
+		movey = 1;
 	}
 	else
 	{
-		move = 1;
-	}
-	while(destx!=tempPlaceX)//no need to check both cus it has the same number of moves
+		movey = -1;
+	}	
+	if (destx - tempPlaceX > 0)
 	{
+		movex = 1;
+	}
+	else
+	{
+		movex = -1;
+	}
+	do
+	{
+		tempPlaceX +=movex;
+		tempPlaceY +=movey;
 		if (!_b->isEmpty(tempPlaceX, tempPlaceY))
 		{
 			return(false);
 		}
-		tempPlaceX=+move;
-		tempPlaceY=+move;
-	}
+	} while (abs(destx -tempPlaceX)>1 );//no need to check both cus it has the same number of moves
 	return(true);
 }
