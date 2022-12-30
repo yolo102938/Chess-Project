@@ -1,7 +1,6 @@
 #pragma once
-
-#include "Board.h"
 #include "Piece.h"
+#include "Board.h"
 
 class Pawn : public Piece
 {

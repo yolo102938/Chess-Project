@@ -47,27 +47,27 @@ Board::Board(string boardSetup)
 			}
 			else if (boardSetup[stringPlace] == 'n')
 			{
-				_pieces[i][j] = new Knight(this, std::to_string(i) + std::to_string(j + 65), 1);
+				_pieces[i][j] = new Knight(this, std::to_string(i) + std::to_string(j + 65), "knight",1);
 			}
 			else if (boardSetup[stringPlace] == 'N')
 			{
-				_pieces[i][j] = new Knight(this, std::to_string(i) + std::to_string(j + 65), 0);
+				_pieces[i][j] = new Knight(this, std::to_string(i) + std::to_string(j + 65), "knight", 0);
 			}
 			else if (boardSetup[stringPlace] == 'q')
 			{
-				_pieces[i][j] = new Queen(this, std::to_string(i) + std::to_string(j + 65), 1);
+				_pieces[i][j] = new Queen(this, std::to_string(i) + std::to_string(j + 65), "queen", 1);
 			}
 			else if (boardSetup[stringPlace] == 'Q')
 			{
-				_pieces[i][j] = new Queen(this, std::to_string(i) + std::to_string(j + 65), 0);
+				_pieces[i][j] = new Queen(this, std::to_string(i) + std::to_string(j + 65), "queen", 0);
 			}
 			else if (boardSetup[stringPlace] == 'p')
 			{
-				_pieces[i][j] = new Pawn(this, std::to_string(i) + std::to_string(j + 65),1);
+				_pieces[i][j] = new Pawn(this, std::to_string(i) + std::to_string(j + 65), "pawn",1);
 			}
 			else if (boardSetup[stringPlace] == 'P')
 			{
-				_pieces[i][j] = new Pawn(this, std::to_string(i) + std::to_string(j + 65), 0);
+				_pieces[i][j] = new Pawn(this, std::to_string(i) + std::to_string(j + 65), "pawn", 0);
 			}
 			else
 			{

@@ -1,12 +1,11 @@
 #pragma once
-
-#include "Board.h"
 #include "Piece.h"
+#include "Board.h"
 
 class Knight : public Piece
 {
 public:
-	Knight(Board* board, string pos, string type, int color) : Piece(board, pos, type, color) {};
+	Knight(Board* board, string pos, string type, int color);
 	virtual ~Knight();
 	virtual bool checkMove(string place);
 };

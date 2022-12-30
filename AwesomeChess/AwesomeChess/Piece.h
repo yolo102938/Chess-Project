@@ -2,7 +2,7 @@
 #include "Board.h"
 
 class Board;
-
+using std::string;
 class Piece
 {
 protected:

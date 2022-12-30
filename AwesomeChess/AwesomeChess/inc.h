@@ -4,4 +4,9 @@
 #include "Pawn.h"
 #include "Queen.h"
 #include "Rook.h"
-
+class Bishop;
+class King;
+class Knight;
+class Pawn;
+class Queen;
+class Rook;
