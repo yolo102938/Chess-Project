@@ -1,5 +1,6 @@
 #include "Board.h"
 #include "inc.h"
+#include <string>
 
 Board::Board(string boardSetup)
 {
@@ -174,28 +175,32 @@ int Board::checkMove(string begDest)
 	}
 	return(0);//if nothing came up,return valid :D
 }
-bool Board::checkMate(int color) {
-	string king = findKing(color);
-	int kingX = Piece::getPositionNumber_X(king);
-	int kingY = Piece::getPositionNumber_X(king);
-	Piece* temp = nullptr;
-	Piece* kingPiece = _pieces[kingX][kingY];
-	bool ret = true;
-	for (int y = -1; y < 2; y++) {
-		for (int x = -1; x < 2; x++) {
-			 if (_pieces[y][x]->getColor() == color) {}
-			 else 
-			 {
-				 temp = _pieces[y][x];
-				 _pieces[kingX][kingY] = nullptr;
-				 _pieces[y][x] = kingPiece;
-				 ret = checkCheck(color);
-				  _pieces[y][x] = temp ;
-				 _pieces[kingX][kingY] = kingPiece;
-			 }
+bool Board::checkMate(int color)
+{
+	string forwardCheck;
+
+	for (int i = 0; i < BOARD_SIZE; i++)
+	{
+		for (int j = 0; j < BOARD_SIZE; j++)
+		{
+			if (_pieces[i][j] != nullptr && _pieces[i][j]->getColor() == color)
+			{
+				for (int k = 0; k < BOARD_SIZE; k++)
+				{
+					for (int p = 0; p < BOARD_SIZE; p++)
+					{
+						forwardCheck = (char)((char)k + 96);
+						forwardCheck += (char)((char)p + 48);
+						if (_pieces[i][j]->checkMove(forwardCheck))
+						{
+							return false;
+						}
+					}
+				}
+			}
 		}
 	}
-	return(ret);
+	return true;
 }
 
 bool Board::checkCheck(int color) 
