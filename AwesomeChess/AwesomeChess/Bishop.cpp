@@ -12,10 +12,11 @@ bool Bishop::checkMove(string place)
 	int desty = Piece::getPositionNumber_Y(place);
 	int movey = 0;
 	int movex = 0;
-	if (abs((desty - tempPlaceY) / abs(destx - tempPlaceX)) != 1) //if its not diagonal return false
+	if (abs((desty - tempPlaceY)) != abs(destx - tempPlaceX) ) //if its not diagonal return false
 	{
 		return(false);
 	}
+	printf("%d %d", abs((desty - tempPlaceY)), abs(destx - tempPlaceX));
 	if (desty - tempPlaceY > 0)
 	{
 		movey = 1;
@@ -32,7 +33,7 @@ bool Bishop::checkMove(string place)
 	{
 		movex = -1;
 	}
-	do
+	while (abs(destx - tempPlaceX) > 1)
 	{
 		tempPlaceX +=movex;
 		tempPlaceY +=movey;
@@ -40,6 +41,6 @@ bool Bishop::checkMove(string place)
 		{
 			return(false);
 		}
-	} while (abs(destx -tempPlaceX)>1 );//no need to check both cus it has the same number of moves
+	}//no need to check both cus it has the same number of moves
 	return(true);
 }

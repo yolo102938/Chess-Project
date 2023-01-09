@@ -13,7 +13,8 @@ bool Rook::checkMove(string place)
 
 	if ( destx == tempPlaceX) //if the path is the same col
 	{
-		for (tempPlaceY; tempPlaceY < desty; desty > tempPlaceY ? tempPlaceY++ : tempPlaceY--) //check there is something that is blocking, up or down depends on the dst
+		desty < tempPlaceY ? tempPlaceY++ : tempPlaceY--;
+		for (tempPlaceY; desty < tempPlaceY ? desty < tempPlaceY:tempPlaceY > desty; desty > tempPlaceY ? tempPlaceY++ : tempPlaceY--) //check there is something that is blocking, up or down depends on the dst
 		{
 			if (!_b->isEmpty(tempPlaceX, tempPlaceY)) {
 				return(false);
@@ -23,7 +24,7 @@ bool Rook::checkMove(string place)
 	}
 	if (desty == tempPlaceY) //if the path is the same row
 	{
-		for (tempPlaceX; tempPlaceX < destx; destx > tempPlaceX ? tempPlaceX++ : tempPlaceX--) //check there is something that is blocking, left or right depends on the dst
+		for (tempPlaceX; destx < tempPlaceX ? destx < tempPlaceX:tempPlaceX > destx; destx > tempPlaceX ? ++tempPlaceX : --tempPlaceX) //check there is something that is blocking, left or right depends on the dst
 		{
 			if (!_b->isEmpty(tempPlaceX, tempPlaceY))
 			{

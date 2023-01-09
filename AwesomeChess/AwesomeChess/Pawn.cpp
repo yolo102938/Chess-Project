@@ -16,9 +16,17 @@ bool Pawn::checkMove(string place)
 	}
 	if (desty != tempPlaceY + move)//if its not the next row
 	{
+		if (destx == tempPlaceX && desty == tempPlaceY + 2)
+		{
+			return(this->getPositionNumber_Y() == 2);
+		}
+		if (destx == tempPlaceX && desty == tempPlaceY - 2)
+		{
+			return(this->getPositionNumber_Y() == 7);
+		}
 		return(false);
 	}
-	if (destx == tempPlaceX)//if it tries to go forward
+	if (destx == tempPlaceX&& _b->isEmpty(destx, desty))//if it tries to go forward
 	{
 		return(true);
 	}
@@ -30,5 +38,6 @@ bool Pawn::checkMove(string place)
 	{
 		return(true);
 	}
+
 	return false;
 }
