@@ -21,7 +21,7 @@ void main()
 
 	
 	Pipe p;
-	Board* b = new Board("rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1");
+	Board* b = new Board("rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR0");
 	bool isConnect = p.connect();
 	
 	string ans;

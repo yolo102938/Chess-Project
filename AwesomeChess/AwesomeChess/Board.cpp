@@ -6,7 +6,7 @@ Board::Board(string boardSetup)
 {
 	int stringPlace = 0;
 	this->_BoardString = boardSetup; //setting the board's string to the given string
-	this->_turnColor = 1; //setting the number for the current color's turn (1 - black  |  0 - white)
+	this->_turnColor = 0; //setting the number for the current color's turn (1 - black  |  0 - white)
 
 	//looping to create all of the piece objects according to the given string, and forming the _pieces array.
 	for (int i = 0; i < BOARD_SIZE; i++)
@@ -161,12 +161,8 @@ int Board::checkMove(string begDest)
 		_pieces[desty][destx] = dest;
 		return(4);
 	}
-
-	
-	
-	if (checkCheck(_turnColor)) //if the moves checks the other player,check for mate and return the right code.
+	if (checkCheck(abs(_turnColor-1))) //if the moves checks the other player,check for mate and return the right code.
 	{
-		
 		if (checkMate(_turnColor)) 
 		{
 			return(8);
@@ -178,7 +174,7 @@ int Board::checkMove(string begDest)
 bool Board::checkMate(int color)
 {
 	string forwardCheck;
-
+	Piece* temp = nullptr;
 	for (int i = 0; i < BOARD_SIZE; i++)
 	{
 		for (int j = 0; j < BOARD_SIZE; j++)
@@ -193,7 +189,17 @@ bool Board::checkMate(int color)
 						forwardCheck += (char)((char)p + 48);
 						if (_pieces[i][j]->checkMove(forwardCheck))
 						{
-							return false;
+							temp = _pieces[k][p];
+							_pieces[k][p] = _pieces[i][j];
+							int color = _pieces[i][j]->getColor();
+							_pieces[i][j] = nullptr;
+							bool res = checkCheck(color); //if the moves checks the current player (illegal move),undo the move and return error code 4
+							_pieces[i][j] = _pieces[k][p];
+							_pieces[k][p] = temp;
+							if (!res) 
+							{
+								return(4);
+							}
 						}
 					}
 				}
