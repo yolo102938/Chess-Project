@@ -163,7 +163,7 @@ int Board::checkMove(string begDest)
 	}
 	if (checkCheck(abs(_turnColor-1))) //if the moves checks the other player,check for mate and return the right code.
 	{
-		if (checkMate(_turnColor)) 
+		if (checkMate(abs(_turnColor-1)))
 		{
 			return(8);
 		}
@@ -173,33 +173,44 @@ int Board::checkMove(string begDest)
 }
 bool Board::checkMate(int color)
 {
+	bool res = true;
 	string forwardCheck;
-	Piece* temp = nullptr;
+	string tempPos = "";
+	Piece* temp = _pieces[0][0];
 	for (int i = 0; i < BOARD_SIZE; i++)
 	{
 		for (int j = 0; j < BOARD_SIZE; j++)
 		{
 			if (_pieces[i][j] != nullptr && _pieces[i][j]->getColor() == color)
 			{
+				tempPos = _pieces[i][j]->getPositionString();
 				for (int k = 0; k < BOARD_SIZE; k++)
 				{
 					for (int p = 0; p < BOARD_SIZE; p++)
 					{
-						forwardCheck = (char)((char)k + 96);
-						forwardCheck += (char)((char)p + 48);
-						if (_pieces[i][j]->checkMove(forwardCheck))
-						{
-							temp = _pieces[k][p];
-							_pieces[k][p] = _pieces[i][j];
-							int color = _pieces[i][j]->getColor();
-							_pieces[i][j] = nullptr;
-							bool res = checkCheck(color); //if the moves checks the current player (illegal move),undo the move and return error code 4
-							_pieces[i][j] = _pieces[k][p];
-							_pieces[k][p] = temp;
-							if (!res) 
+						if (_pieces[p][k]==nullptr||_pieces[p][k]->getColor()!=color) {
+				
+							forwardCheck = (char)(k + 97);
+							forwardCheck = forwardCheck + (char)(p + 49);
+
+							if (_pieces[i][j]->checkMove(forwardCheck))
 							{
-								return(4);
-							}
+								
+								temp = _pieces[p][k];
+								_pieces[p][k] = _pieces[i][j];
+								_pieces[p][k]->setPosition(forwardCheck);
+								_pieces[i][j] = nullptr;
+								res = checkCheck(color); //if the moves checks the current player (illegal move),undo the move and return error code 4
+								_pieces[p][k]->setPosition(tempPos);
+								_pieces[i][j] = _pieces[p][k];
+								_pieces[p][k] = temp;
+
+								if (!res)
+								{
+									return(false);
+								}
+						}
+
 						}
 					}
 				}
@@ -209,7 +220,7 @@ bool Board::checkMate(int color)
 	return true;
 }
 
-bool Board::checkCheck(int color) 
+bool Board::checkCheck(int color) const
 {
 	string king = findKing(color);
 	for (int i = 0; i < BOARD_SIZE; i++)
@@ -218,16 +229,17 @@ bool Board::checkCheck(int color)
 		{
 			if (_pieces[i][j] != nullptr) 
 			{
-				if (_pieces[i][j]->getColor() == abs(color-1) && _pieces[i][j]->checkMove(king) )
+				if ((_pieces[i][j]->getColor() == abs(color-1)) && _pieces[i][j]->checkMove(king) )
 				{
 					return(true);
 				}
 			}
 		}
 	}
+
 	return(false);
 }
-string Board::findKing(int color) {
+string Board::findKing(int color) const {
 	for (int i = 0; i < BOARD_SIZE; i++)
 	{
 		for (int j = 0; j < BOARD_SIZE; j++) 

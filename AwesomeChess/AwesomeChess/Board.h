@@ -23,9 +23,9 @@ public:
 	int getTurn() const;
 	void moveToNextTurn();
 	bool isEmpty(int x, int y);
-	bool checkCheck(int color);//funny name lolz
+	bool checkCheck(int color) const;//funny name lolz
 	bool checkMate(int color);//even funnier
-	string findKing(int color);
+	string findKing(int color) const;
 	int checkMove(string begDest);
 	
 };

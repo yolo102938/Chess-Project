@@ -22,6 +22,13 @@ void main()
 	
 	Pipe p;
 	Board* b = new Board("rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR0");
+	//for easy debugging, delete l8r
+	STARTUPINFO info = { sizeof(info) };
+	PROCESS_INFORMATION processInfo;
+	CreateProcess("chessGraphics.exe", NULL, NULL, NULL, TRUE, 0, NULL, NULL, &info, &processInfo);
+	//WaitForSingleObject(processInfo.hProcess, INFINITE);
+	Sleep(2000);
+	//until here
 	bool isConnect = p.connect();
 	
 	string ans;
@@ -75,6 +82,7 @@ void main()
 		// get message from graphics
 		msgFromGraphics = p.getMessageFromGraphics();
 	}
-
+	CloseHandle(processInfo.hProcess);
+	CloseHandle(processInfo.hThread);
 	p.close();
 }
